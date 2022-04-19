@@ -49,7 +49,7 @@ if uploaded_file is not None:
 
     # debugging:
     import glob
-    path = "./results/**"
+    path = "./checkpoint/**"
     for path in glob.glob(path, recursive=True):
         print(path)
     
