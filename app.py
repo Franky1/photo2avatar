@@ -49,8 +49,8 @@ if uploaded_file is not None:
 
     # debugging:
     import glob
-    path = "./checkpoint/**"
-    for path in glob.glob(path, recursive=True):
+    start_path = "./checkpoint/**"
+    for path in glob.glob(start_path, recursive=True):
         print(path)
     
     img_uploaded = PIL.Image.open(uploaded_file)
