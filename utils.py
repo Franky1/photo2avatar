@@ -1,8 +1,11 @@
+import os
+import random
+
+import cv2
+import numpy as np
 import tensorflow as tf
 from tensorflow.contrib import slim
-import cv2
-import os, random
-import numpy as np
+
 
 class ImageData:
 

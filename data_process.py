@@ -1,10 +1,9 @@
+import argparse
 import os
+
 import cv2
 import numpy as np
-from tqdm import tqdm
-import argparse
 
-# import preprocessing
 from preprocessing import preprocess
 
 parser = argparse.ArgumentParser()
@@ -16,7 +15,7 @@ os.makedirs(args.save_path, exist_ok=True)
 
 pre = preprocess.Preprocess()
 
-for idx, img_name in enumerate(tqdm(os.listdir(args.data_path))):
+for idx, img_name in enumerate(os.listdir(args.data_path)):
     img = cv2.cvtColor(cv2.imread(os.path.join(args.data_path, img_name)), cv2.COLOR_BGR2RGB)
 
     # face alignment and segmentation

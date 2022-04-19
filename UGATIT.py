@@ -1,9 +1,12 @@
+import time
+from glob import glob
+
+import numpy as np
+from tensorflow.contrib.data import map_and_batch, prefetch_to_device, shuffle_and_repeat
+
 from ops import *
 from utils import *
-from glob import glob
-import time
-from tensorflow.contrib.data import prefetch_to_device, shuffle_and_repeat, map_and_batch
-import numpy as np
+
 
 class UGATIT(object) :
     def __init__(self, sess, args):

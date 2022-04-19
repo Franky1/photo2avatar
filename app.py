@@ -1,23 +1,16 @@
-import streamlit as st
-# from numpy import load
-# from numpy import expand_dims
-import PIL
-from PIL import Image
-from IPython.display import Image
 import os
-import zipfile
-import cv2
-import numpy as np
-# import preprocessing
-from preprocessing import preprocess
-import UGATIT
-# import urllib.request
-# import dlib
-# import tensorflow as tf
-# import argparse
 import subprocess
 import sys
-# import wget
+import zipfile
+
+import cv2
+import numpy as np
+import PIL
+import streamlit as st
+from PIL import Image
+
+import UGATIT
+from preprocessing import preprocess
 
 st.header("Photo to Avatar")
 st.write("Choose any image and get corresponding avatar:")
@@ -28,11 +21,8 @@ uploaded_file = st.file_uploader("Choose an image...")
 
 @st.cache
 def download_checkpoint():
-
     path = './checkpoint/temp'
-
     if not os.path.exists(path):
-
         decoder_url = 'wget -O ./checkpoint/temp https://www.dropbox.com/sh/63xqqqef0jtevmg/AADN7izdFHxueUbTSRBZrpffa?dl=0'
 
         with st.spinner('downloading pretrained model...'):
