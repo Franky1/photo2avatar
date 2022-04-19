@@ -7,7 +7,6 @@ import cv2
 import numpy as np
 import PIL
 import streamlit as st
-from PIL import Image
 
 import UGATIT
 from preprocessing import preprocess
@@ -48,9 +47,9 @@ if uploaded_file is not None:
     with st.spinner('Wait for modeling...'):
       subprocess.run([f"{sys.executable}", "main.py"])
 
-    img_uploaded = Image(uploaded_file)
-    img_processed = Image(filename="./dataset/sample/testA/0000.png")
-    output = Image(filename="./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")
+    img_uploaded = PIL.Image.open(uploaded_file)
+    img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
+    output = PIL.Image.open("./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")
 
     st.image(img_uploaded, caption='Input Image', use_column_width=True)
     st.image(img_processed, caption='Processed Image', use_column_width=True)
