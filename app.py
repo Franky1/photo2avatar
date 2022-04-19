@@ -46,13 +46,7 @@ if uploaded_file is not None:
 
     with st.spinner('Wait for modeling...'):
         subprocess.run([f"{sys.executable}", "main.py"])
-
-    # debugging:
-    import glob
-    start_path = "./checkpoint/**"
-    for path in glob.glob(start_path, recursive=True):
-        print(path)
-    
+   
     img_uploaded = PIL.Image.open(uploaded_file)
     img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
     output = PIL.Image.open("./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")
