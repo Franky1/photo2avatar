@@ -45,8 +45,14 @@ if uploaded_file is not None:
     cv2.imwrite('./dataset/sample/testA/0000.png', cv2.cvtColor(face_white_bg, cv2.COLOR_RGB2BGR))
 
     with st.spinner('Wait for modeling...'):
-      subprocess.run([f"{sys.executable}", "main.py"])
+        subprocess.run([f"{sys.executable}", "main.py"])
 
+    # debugging:
+    import glob
+    path = "./results/**"
+    for path in glob.glob(path, recursive=True):
+        print(path)
+    
     img_uploaded = PIL.Image.open(uploaded_file)
     img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
     output = PIL.Image.open("./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")
