@@ -1,9 +1,10 @@
+import glob
 import os
 import subprocess
 import sys
+import warnings
 import zipfile
 
-import warnings
 warnings.filterwarnings("ignore")
 
 import cv2
@@ -36,6 +37,25 @@ def download_checkpoint():
         os.rename('./checkpoint/UGATIT_selfie2anime_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing',
                     './checkpoint/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing')
 
+# for debugging only:
+def get_local_files():
+    local_files = []
+
+    for p in glob.glob(pathname="./checkpoint/**", recursive=True):
+        if os.path.isfile(p):
+            local_files.append(p)
+
+    for p in glob.glob(pathname="./dataset/**", recursive=True):
+        if os.path.isfile(p):
+            local_files.append(p)
+
+    for p in glob.glob(pathname="./results/**", recursive=True):
+        if os.path.isfile(p):
+            local_files.append(p)
+
+    return local_files
+
+
 if uploaded_file is not None:
     download_checkpoint()
     img = PIL.Image.open(uploaded_file).convert("RGB")
@@ -50,6 +70,9 @@ if uploaded_file is not None:
 
     with st.spinner('Wait for modeling...'):
         subprocess.run([f"{sys.executable}", "main.py"])
+
+    st.write("Show all local ML related files:")
+    st.table(get_local_files())
 
     img_uploaded = PIL.Image.open(uploaded_file)
     img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
