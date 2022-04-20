@@ -73,7 +73,7 @@ if uploaded_file is not None:
         capture = subprocess.run([f"{sys.executable}", "main.py"], capture_output=True, text=True).stdout
 
     st.write("Show output of ML run:")
-    st.write(capture)
+    st.text(capture)
 
     st.write("Show all local ML related files:")
     st.table(get_local_files())
