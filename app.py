@@ -72,16 +72,31 @@ if uploaded_file is not None:
         # subprocess.run([f"{sys.executable}", "main.py"])
         capture = subprocess.run([f"{sys.executable}", "main.py"], capture_output=True, text=True).stdout
 
-    st.write("Show output of ML run:")
-    st.text(capture)
+    # st.write("Show output of ML run:")
+    # st.text(capture)
 
+    st.markdown("""---""")
     st.write("Show all local ML related files:")
     st.table(get_local_files())
+    st.markdown("""---""")
 
-    img_uploaded = PIL.Image.open(uploaded_file)
-    img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
-    output = PIL.Image.open("./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")
+    try:
+        img_uploaded = PIL.Image.open(uploaded_file)
+    except Exception as e:
+        st.error("Loading of uploaded image failed.")
+    else:
+        st.image(img_uploaded, caption='Input Image', use_column_width=True)
 
-    st.image(img_uploaded, caption='Input Image', use_column_width=True)
-    st.image(img_processed, caption='Processed Image', use_column_width=True)
-    st.image(output, caption='Avatar', use_column_width=True)
+    try:
+        img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
+    except Exception as e:
+        st.error("Loading of processed image failed. Probably the model did not run.")
+    else:
+        st.image(img_processed, caption='Processed Image', use_column_width=True)
+
+    try:
+        output = PIL.Image.open("./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")
+    except Exception as e:
+        st.error("Loading of result image failed. Probably the model did not run.")
+    else:
+        st.image(output, caption='Avatar', use_column_width=True)
