@@ -69,7 +69,11 @@ if uploaded_file is not None:
     cv2.imwrite('./dataset/sample/testA/0000.png', cv2.cvtColor(face_white_bg, cv2.COLOR_RGB2BGR))
 
     with st.spinner('Wait for modeling...'):
-        subprocess.run([f"{sys.executable}", "main.py"])
+        # subprocess.run([f"{sys.executable}", "main.py"])
+        capture = subprocess.run([f"{sys.executable}", "main.py"], capture_output=True, text=True).stdout
+
+    st.write("Show output of ML run:")
+    st.write(capture)
 
     st.write("Show all local ML related files:")
     st.table(get_local_files())
