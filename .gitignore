@@ -131,4 +131,7 @@ dmypy.json
 # local settings
 .idea/
 .vscode/
-checkpoint/*
+checkpoint/**
+results/**
+*.png
+*.jpg

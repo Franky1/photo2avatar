@@ -3,12 +3,14 @@ import subprocess
 import sys
 import zipfile
 
+import warnings
+warnings.filterwarnings("ignore")
+
 import cv2
 import numpy as np
 import PIL
 import streamlit as st
 
-import UGATIT
 from preprocessing import preprocess
 
 st.header("Photo to Avatar")
@@ -18,19 +20,21 @@ uploaded_file = st.file_uploader("Choose an image...")
 
 # newImg.save(out_f)
 
-@st.cache
+@st.cache(show_spinner=False)
 def download_checkpoint():
-    path = './checkpoint/temp'
+    path = './checkpoint/temp.zip'
     if not os.path.exists(path):
-        decoder_url = 'wget -O ./checkpoint/temp https://www.dropbox.com/sh/63xqqqef0jtevmg/AADN7izdFHxueUbTSRBZrpffa?dl=0'
+        decoder_url = 'wget --no-verbose -O ./checkpoint/temp.zip https://www.dropbox.com/sh/63xqqqef0jtevmg/AADN7izdFHxueUbTSRBZrpffa?dl=0'
 
-        with st.spinner('downloading pretrained model...'):
+        with st.spinner('Downloading pretrained model...'):
             os.system(decoder_url)
 
-        with zipfile.ZipFile(path, 'r') as zip_ref:
-          zip_ref.extractall('./checkpoint')
+        with st.spinner('Unzipping downloaded model...'):
+            with zipfile.ZipFile(path, 'r') as zip_ref:
+                zip_ref.extractall('./checkpoint/')
 
-        os.rename('./checkpoint/UGATIT_selfie2anime_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing','./checkpoint/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing')
+        os.rename('./checkpoint/UGATIT_selfie2anime_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing',
+                    './checkpoint/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing')
 
 if uploaded_file is not None:
     download_checkpoint()
@@ -46,7 +50,7 @@ if uploaded_file is not None:
 
     with st.spinner('Wait for modeling...'):
         subprocess.run([f"{sys.executable}", "main.py"])
-   
+
     img_uploaded = PIL.Image.open(uploaded_file)
     img_processed = PIL.Image.open("./dataset/sample/testA/0000.png")
     output = PIL.Image.open("./results/UGATIT_sample_lsgan_4resblock_6dis_1_1_10_10_1000_sn_smoothing/0000.png")

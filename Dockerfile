@@ -24,12 +24,12 @@ COPY packages.txt packages.txt
 RUN xargs -a packages.txt apt-get install --yes
 
 # update python tools
-RUN python -m pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir --upgrade setuptools wheel
+RUN python -m pip install --upgrade pip
+RUN pip install --upgrade setuptools wheel
 
 # install python packages
 COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install --upgrade -r requirements.txt
 
 EXPOSE 8501
 
